@@ -1,0 +1,12 @@
+Prosty bot do gry plemiona.pl
+
+Zawiera mozliwosc tworzenia prostych skryptow automatyzujacych pewne czynnosci w
+grze.
+
+Aktualnie uruchomienie polega na wydaniu komendy:
+python main.py <plik skryptu>
+
+Dostepny jest przykladowy skrypt pokazujacy mozliwosci skryptu
+python main script.py
+
+
