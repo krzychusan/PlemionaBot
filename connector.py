@@ -69,4 +69,5 @@ class Connector:
             resp = self.opener.open(path, params)
         return resp.read()
 
-
+    def change_village(self, new_village):
+        pass

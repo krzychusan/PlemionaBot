@@ -5,20 +5,36 @@ SERVER = 58
 
 
 
+############### ODPOWIEDNIE DEFINE DO SKRYPTU ###################
+WALL = 'wall'
+
+
 ############### Adresy podstron ###############
 village_main_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=overview"
 village_barracks_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=barracks"
 village_townhall_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=main"
+village_attack_confirm_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=place&action=command&h=%s"
+village_attack_request_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=place&try=confirm"
+village_build_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=main&ajaxaction=upgrade_building&h=%s&type=main&id=%s&force=1&destroy=0"
 
+attack_parameters_regexp = \
+"""<form action="/game.php\?village=\d+&amp;screen=place&amp;action=command&amp;h=(.*?)" method="post" onsubmit="this.submit.disabled=true;">.*?
+<input type="hidden" name="ch" value="(.*?)" />\s*\
+<input type="hidden" name="x" value="(\d+)" />\s*\
+<input type="hidden" name="y" value="(\d+)" />\s*\
+<input type="hidden" name="action_id" value="(\d+)" />"""
 
-
-
-
+build_parameters_regexp = \
+"""<td><a id="main_buildlink_.*?" href="/game.php\?village=\d+&amp;screen=main&amp;action=build&amp;h=(.*?)&amp;id=.*?" onclick="return BuildingMain.build\('"""
 
 ################ Wyrazenia regularne do parsowania strony #################
 
-server_list_regexp = """<p style=\\"margin: 5px; margin-left: 0px; margin-bottom: 10px; font-weight:bold;\\">Na kt\\u00f3rym \\u015bwiecie chcesz si\\u0119 zalogowa\\u0107?<\/p>"""
+main_page_string = """<title>Plemiona - gra online</title>"""
 
+server_list_regexp = """<p style=\\"margin: 5px; margin-left: 0px; margin-bottom: 10px; font-weight:bold;\\">Na kt\\u00f3rym \\u015bwiecie chcesz si\\u0119 zalogowa\\u0107?<\/p>"""
+attack_request_regexp = """<tr><td>Cel:</td><td>"""
+
+################# SUROWCE ###########################
 wood_amount_regexp = """<td class="box-item"><span id="wood" title="\d+" class=".*?">(\d+)</span></td>"""
 stone_amount_regexp = """<td class="box-item"><span id="stone" title="\d+" class=".*?">(\d+)</span></td>"""
 iron_amount_regexp = """<td class="box-item"><span id="iron" title="\d+" class=".*?">(\d+)</span></td>"""
@@ -27,16 +43,20 @@ population_amount_regexp = """<span id="pop_current_label">(\d+)</span>/<span id
 
 village_number_regexp = "/game.php\?village=(\d+)&amp;screen=overview_villages"
 
+################### PRODUKCJA #######################
 wood_production_regexp = """<span class="icon header wood"> </span> Drewno\s*</td>\s*<td>\s*<strong> (\d+)</strong> na godzin"""
 stone_production_regexp = """<span class="icon header stone"> </span> Glina\s*</td>\s*<td>\s*<strong> (\d+)</strong> na godzin"""
 iron_production_regexp = """<span class="icon header iron"> </span> .{2}elazo\s*</td>\s*<td>\s*<strong> (\d+)</strong> na godzin"""
 
 
+#################### WOJSKA ########################
 spear_amount_regexp = """<img src="http://cdn.tribalwars.net/graphic/unit/unit_spear.png\?1" alt="" />\s*?Pikinier.*?<td>\d+:\d+:\d+</td>\s+<td>(\d+)/(\d+)</td>"""
 sword_amount_regexp = """<img src="http://cdn.tribalwars.net/graphic/unit/unit_sword.png\?1" alt="" />\s*?Miecznik.*?<td>\d+:\d+:\d+</td>\s+<td>(\d+)/(\d+)</td>"""
 axe_amount_regexp = """<img src="http://cdn.tribalwars.net/graphic/unit/unit_axe.png\?1" alt="" />\s*?Topornik.*?<td>\d+:\d+:\d+</td>\s+<td>(\d+)/(\d+)</td>"""
 archer_amount_regexp = """<img src="http://cdn.tribalwars.net/graphic/unit/unit_archer.png\?1" alt="" />\s*?.{2}ucznik.*?<td>\d+:\d+:\d+</td>\s+<td>(\d+)/(\d+)</td>"""
 
+
+################# BUDYNKI ################
 townhall_level_regexp = """<img src="http://cdn.tribalwars.net/graphic/buildings/main.png\?1" title="Ratusz" alt="" /> Ratusz</a>\s*<span class="nowrap">\s*\(Poziom (\d+)\)\s*</span>"""
 barracks_level_regexp = """<img src="http://cdn.tribalwars.net/graphic/buildings/barracks.png\?1" title="Koszary" alt="" /> Koszary</a>\s*<span class="nowrap">\s*\(Poziom (\d+)\)\s*</span>"""
 church_level_regexp = """<img src="http://cdn.tribalwars.net/graphic/buildings/church.png\?1" title=".*?" alt="" /> .*?</a>\s*<span class="nowrap">\s*\(Poziom (\d+)\)\s*</span>"""
@@ -56,5 +76,3 @@ garage_level_regexp = """<img src="http://cdn.tribalwars.net/graphic/buildings/g
 palace_level_regexp = """<img src="http://cdn.tribalwars.net/graphic/buildings/snob.png\?1" title="Pa.{2}ac" alt="" /> Pa.{2}ac</a>\s*<span class="nowrap">\s*\(Poziom (\d+)\)\s*</span>"""
 
 
-
-main_page_string = """<title>Plemiona - gra online</title>"""

@@ -1,11 +1,15 @@
 import sys
 import os
+import time
 
 import connector
 import functions
+import actions
+from config import *
 
 connection = connector.Connector()
 functions = functions.Functions(connection)
+actions = actions.Actions(connection)
 
 def polacz(login, password, server):
     global connection
@@ -86,6 +90,15 @@ def budynki():
     print 'GARAGE       ' + str(garage)
     print 'PALACE       ' + str(palace)
     print '--------------------------'
+
+def czekaj(czas):
+    time.sleep(czas)
+
+def atakuj(enemy, army):
+    actions.attack(enemy, army)
+
+def buduj(building):
+    actions.build(building)
 
 def usage():
     print 'Uzycie: \n python main.py script.py'
