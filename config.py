@@ -47,6 +47,10 @@ active_attacks_regexp = \
 single_attack_regexp = \
 """<span id="labelText\[\d+\]">(.*?)</span></a>.*?</span>\s+</td>\s+<td>(.*?)</td>\s+<td><span class="timer">(.*?)</span></td>"""
 
+active_recruitment_regexp = \
+"""<tr><th width="150">Kszta.{2}cenie</th><th width="120">Trwanie</th><th width="150">Gotowe</th><th width="100">Zako.{2}cz \*</th></tr>.*?</tbody>\s+</table>\s+</div>"""
+single_recruitment_regexp = \
+"""<td class="lit-item">(.*?)</td>\s*<td class="lit-item"><span.*?>(.*?)</span></td>\s*<td class="lit-item">(.*?)</td>"""
 
 ################# SUROWCE ###########################
 wood_amount_regexp = """<td class="box-item"><span id="wood" title="\d+" class=".*?">(\d+)</span></td>"""

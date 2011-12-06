@@ -167,7 +167,7 @@ class Functions:
 
         if not string.find(page, 'Polecenie budowy'):
             return []
-  
+
         try:
             constructions = re.search(active_construction_regexp, page, re.DOTALL).group(0)
         except:
@@ -180,3 +180,21 @@ class Functions:
                                     re.DOTALL).groups())
             constructions = constructions[idx+8:]
         return ret
+
+    def get_recrutation(self, page=None):
+        if page is None:
+            url = village_barracks_page % (self.connector.server, self.connector.village)
+            page = self.connector.get_url(url)
+        
+        try:
+            recruits = re.search(active_recruitment_regexp, page, re.DOTALL).group(0)
+        except:
+            print 'Problem z parsowaniem :/'
+            return []
+
+        ret = []
+        recruit = recruits.split('przerwij</a></td>')[:-1]
+        for r in recruit:
+            ret.append(re.search(single_recruitment_regexp, r, re.DOTALL).groups())
+        return ret
+

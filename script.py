@@ -23,8 +23,9 @@ polacz('', '', 58)
 #buduj(STONEHOUSE)
 
 #wyswietla wszystkie budowane budynki
-konstrukcje()
+#konstrukcje()
 
 #wyswietla wszystkie aktualne ruchy wojsk
-rozkazy()
+#rozkazy()
 
+rekrutacja()

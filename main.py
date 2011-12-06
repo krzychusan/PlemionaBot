@@ -36,6 +36,13 @@ def rozkazy():
         print order[0], ' ', order[1], ' ', order[2]
     print '----------------------------\n'
 
+def rekrutacja():
+    rekruci = functions.get_recrutation()
+    print '-------- REKRUTACJA --------'
+    print 'Jednostki            Trwanie         Gotowe'
+    for rek in rekruci:
+        print rek[0], ' ', rek[1], ' ', rek[2]
+    print '----------------------------\n'
 
 def surowce():
     global functions
