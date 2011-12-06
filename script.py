@@ -19,5 +19,12 @@ polacz('', '', 58)
 #atakuj((531,278), (0,1,0,0,0,0,0,0,0,0,0,0))
 
 
-#proba wybudowania muru
-buduj(WALL)
+#proba wybudowania Cegielni
+#buduj(STONEHOUSE)
+
+#wyswietla wszystkie budowane budynki
+konstrukcje()
+
+#wyswietla wszystkie aktualne ruchy wojsk
+rozkazy()
+

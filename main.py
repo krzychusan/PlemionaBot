@@ -20,6 +20,23 @@ def polacz(login, password, server):
     if not connection.join_server(server):
         sys.exit(1)
 
+def konstrukcje():
+    constructions = functions.get_constructions()
+    print '------ KONSTRUKCJE ---------'
+    print 'Budynek             Czas do konca         Kiedy koniec'
+    for con in constructions:
+        print con[0], ' ', con[1], ' ', con[2]
+    print '----------------------------\n'
+
+def rozkazy():
+    orders = functions.get_orders()
+    print '------ ROZKAZY -------------'
+    print 'Opis                                        Na miejscu          Za ile'
+    for order in orders:
+        print order[0], ' ', order[1], ' ', order[2]
+    print '----------------------------\n'
+
+
 def surowce():
     global functions
     (wood, stone, iron, storage, (population,max_population)) = functions.get_resources()
@@ -98,7 +115,10 @@ def atakuj(enemy, army):
     actions.attack(enemy, army)
 
 def buduj(building):
-    actions.build(building)
+    if actions.build(building):
+        print 'Budowanie dodane: ', building
+    else:
+        print 'Nie powiodlo sie budowanie: ', building
 
 def usage():
     print 'Uzycie: \n python main.py script.py'

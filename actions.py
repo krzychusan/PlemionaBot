@@ -14,12 +14,16 @@ class Actions:
         url = village_townhall_page % \
                 (self.connector.server, self.connector.village)
         page = self.connector.get_url(url)
-        h = re.search(build_parameters_regexp, page).group(1)
-        
+        try:
+            h = re.search(build_parameters_regexp, page).group(1)
+        except:
+            print 'Wymagania na budynek nie spelnione.'
+            return False
+
         url = village_build_page % \
                 (self.connector.server, self.connector.village, h, building)
         page = self.connector.get_url(url)
-        print page
+        return string.find(page, 'Polecenie budowy')
 
     def attack(self, (px,py), army):
         attr = self._init_attack((px,py), army)

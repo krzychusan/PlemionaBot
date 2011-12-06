@@ -7,7 +7,7 @@ SERVER = 58
 
 ############### ODPOWIEDNIE DEFINE DO SKRYPTU ###################
 WALL = 'wall'
-
+STONEHOUSE = 'stone'
 
 ############### Adresy podstron ###############
 village_main_page = "http://pl%s.plemiona.pl/game.php?village=%s&screen=overview"
@@ -33,6 +33,20 @@ main_page_string = """<title>Plemiona - gra online</title>"""
 
 server_list_regexp = """<p style=\\"margin: 5px; margin-left: 0px; margin-bottom: 10px; font-weight:bold;\\">Na kt\\u00f3rym \\u015bwiecie chcesz si\\u0119 zalogowa\\u0107?<\/p>"""
 attack_request_regexp = """<tr><td>Cel:</td><td>"""
+
+
+############### DYNAMICZNE AKCJE ##################
+
+active_construction_regexp = \
+"""<tbody id="buildqueue">.*?<tr class="lit nodrag">(.*?)</tbody>\s*</table>"""
+single_construction_regexp = \
+"""<td width="250" class="nowrap lit-item">(.*?)</td>.*?<span.*?>(.*?)</span>.*?<td class="lit-item" width="170">(.*?)</td>"""
+
+active_attacks_regexp = \
+"""<th width="15%">Na miejscu za</th>.*?</table>"""
+single_attack_regexp = \
+"""<span id="labelText\[\d+\]">(.*?)</span></a>.*?</span>\s+</td>\s+<td>(.*?)</td>\s+<td><span class="timer">(.*?)</span></td>"""
+
 
 ################# SUROWCE ###########################
 wood_amount_regexp = """<td class="box-item"><span id="wood" title="\d+" class=".*?">(\d+)</span></td>"""

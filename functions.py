@@ -1,4 +1,5 @@
 import re
+import string 
 
 import connector
 from config import *
@@ -25,7 +26,7 @@ class Functions:
 
     #Returns actual production: (wood, stone, iron)
     def get_production(self, page=None):
-        if page == None:
+        if page is None:
             url = village_main_page % (self.connector.server, self.connector.village)
             page = self.connector.get_url(url)
 
@@ -35,7 +36,7 @@ class Functions:
         return (wood, stone, iron)
 
     def get_units(self, page=None):
-        if page == None:
+        if page is None:
             url = village_barracks_page % (self.connector.server, self.connector.village)
             page = self.connector.get_url(url)
 
@@ -96,7 +97,7 @@ class Functions:
                 (knight, max_knight), (noble, max_noble))
 
     def get_buildings(self, page=None):
-        if page == None:
+        if page is None:
             url = village_townhall_page % (self.connector.server, self.connector.village)
             page = self.connector.get_url(url)
         try: townhall = re.search(townhall_level_regexp, page, re.DOTALL).group(1)
@@ -139,3 +140,43 @@ class Functions:
                 stonehouse, ironhouse, farm, storage,
                 hide, wall, stable, garage,
                 palace)
+
+    def get_orders(self, page=None):
+        if page is None:
+            url = village_main_page % (self.connector.server, self.connector.village)
+            page = self.connector.get_url(url)
+
+        if not string.find(page, 'asne rozkazy'):
+            return []
+
+        try:
+            orders = re.search(active_attacks_regexp, page, re.DOTALL).group(0)
+        except:
+            print 'Problem z parsowaniem :/'
+            return []
+        ret = []
+        order = orders.split('</tr>')[1:-1]
+        for o in order:
+            ret.append(re.search(single_attack_regexp, o, re.DOTALL).groups())
+        return ret
+
+    def get_constructions(self, page=None):
+        if page is None:
+            url = village_townhall_page % (self.connector.server, self.connector.village)
+            page = self.connector.get_url(url)
+
+        if not string.find(page, 'Polecenie budowy'):
+            return []
+  
+        try:
+            constructions = re.search(active_construction_regexp, page, re.DOTALL).group(0)
+        except:
+            print 'Problem z parsowaniem :/'
+            return []
+        ret = []
+        for obj in range(string.count(constructions, 'przerwij')):
+            idx = string.find(constructions, 'przerwij')
+            ret.append(re.search(single_construction_regexp, constructions,
+                                    re.DOTALL).groups())
+            constructions = constructions[idx+8:]
+        return ret
